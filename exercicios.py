@@ -1,7 +1,11 @@
 import nltk
+#nltk.download()
 from nltk.corpus import gutenberg
 from random import choice
 from nltk.corpus import udhr
+from nltk.corpus import brown
+from nltk.corpus import swadesh
+
 
 print('\nExercicio 1.1')
 texto = gutenberg.words('austen-persuasion.txt')
@@ -37,3 +41,21 @@ def find_language(palavra):
 print(find_language('one'))
 print(find_language('ein'))
 print(find_language('gar'))
+
+print('\nExercicio 2.1')
+freq10 = []
+palavras = nltk.FreqDist(brown.words())
+for palavra in palavras:
+    if palavras[palavra] >= 10000:
+        freq10.append(palavra)
+print(freq10)
+
+print('\nExercicio 2.2')
+swadesh.fileids()
+texto = swadesh.raw('pt')
+letras = []
+for letra in texto:
+    letra_freq = [letra, nltk.FreqDist(texto)[letra]]
+    letras.append(letra_freq)
+
+print(letras)
