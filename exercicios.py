@@ -7,8 +7,11 @@ from nltk.corpus import brown
 from nltk.corpus import swadesh
 from nltk.corpus import names
 from nltk.corpus import wordnet
+from nltk.corpus import words
+import re
 
 
+'''
 print('\nExercicio 1.1')
 texto = gutenberg.words('austen-persuasion.txt')
 print('austen-persuasion.txt possui ' + str(len(texto)) + ' palavras')
@@ -97,3 +100,63 @@ for palavra in wordnet.all_synsets('n'):
     total += len(palavra.hyponyms())
     quantidade +=1
 print(total/quantidade)
+
+print('\nExercicio 10.1')
+palavras = ['music', 'dog', 'parrot']
+synset_word = []
+synset_table = []
+for palavra in palavras:
+    for synset in wordnet.synsets(palavra, 'n'):
+        synset_word.append(synset)
+for i, synset1 in enumerate(synset_word):
+    synset_path = []
+    synset_path.append(synset1)
+    for synset2 in synset_word:
+        synset_path.append('{:3.1f}'.format(synset1.path_similarity(synset2)*100))
+    synset_table.append(synset_path)
+for synset in synset_table:
+    print(synset)
+
+print('\nExercicio 11.1')
+print('*ed')
+for word in nltk.corpus.words.words('en'):
+    if re.search('ed$', word):
+        print(word)
+print('\n**j**t**')
+for word in nltk.corpus.words.words('en'):
+    if re.search('^..j..t..$', word):
+        print(word)   
+print('\n[ghi][mno][jlk][def]')
+for word in nltk.corpus.words.words('en'):
+    if re.search('^[ghi][mno][jlk][def]$', word):
+        print(word)
+
+print('\nExercicio 11.2')
+print('[0-9]')
+for word in nltk.corpus.treebank.words():
+    if re.search('[0-9]', word):
+        print(word)
+print('\n[0-9]*4')
+for word in nltk.corpus.treebank.words():
+    if re.search('^[0-9]{4}$', word):
+        print(word)
+print('\n[0-9]*4 inteiros')
+for word in nltk.corpus.treebank.words():
+    if re.search('^[0-9]{4,}$', word):
+        print(word)
+print('\n[0-9] decimais')
+for word in nltk.corpus.treebank.words():
+    if re.search('^[0-9]+\.[0-9]+$', word):
+        print(word)
+print('\n*ed ou *ing')
+for word in nltk.corpus.treebank.words():
+    if re.search('(ed|ing)$', word):
+        print(word)
+'''
+
+print('\npalavras compostas')
+for word in nltk.corpus.treebank.words():
+    if re.search('^[a-z]+-[a-z]+$', word):
+        print(word)
+    if re.search('^[a-z]+-[a-z]+-[a-z]+$', word):
+        print(word)
