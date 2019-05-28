@@ -5,6 +5,8 @@ from random import choice
 from nltk.corpus import udhr
 from nltk.corpus import brown
 from nltk.corpus import swadesh
+from nltk.corpus import names
+from nltk.corpus import wordnet
 
 
 print('\nExercicio 1.1')
@@ -57,5 +59,41 @@ letras = []
 for letra in texto:
     letra_freq = [letra, nltk.FreqDist(texto)[letra]]
     letras.append(letra_freq)
-
 print(letras)
+
+print('\nExercicio 3.1')
+letra_freq = nltk.ConditionalFreqDist()
+for lingua in swadesh.fileids():
+    for letra in swadesh.raw(lingua).lower():
+        if letra.isalpha():
+            letra_freq[lingua][letra] +=1
+letra_freq.tabulate(samples='abcdefghijklmnopqrstuvwxyz')
+
+print('\nExercicio 3.2')
+letra_freq = nltk.ConditionalFreqDist()
+for genero in names.fileids():
+    for nome in names.words(genero):
+        letra_freq[genero][nome[0]] +=1
+letra_freq.tabulate(samples='ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+print('\nExercicio 3.3')
+for categoria in brown.categories():
+    diversidade = len(brown.words(categories=[categoria])) / len(set(brown.words(categories=[categoria])))
+    print(categoria,diversidade)
+
+print('\nExercicio 8.1')
+substantivos = 0
+nao_hyponymys = 0
+for palavra in wordnet.all_synsets('n'):
+    substantivos +=1
+    if palavra.hyponyms():
+        nao_hyponymys +=1
+print(nao_hyponymys/substantivos)
+
+print('\nExercicio 8.2')
+total = 0
+quantidade = 0
+for palavra in wordnet.all_synsets('n'):
+    total += len(palavra.hyponyms())
+    quantidade +=1
+print(total/quantidade)
